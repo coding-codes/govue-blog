@@ -1,6 +1,7 @@
 package v1
 
 import (
+	"encoding/json"
 	"github.com/coding-codes/service"
 	"github.com/coding-codes/utils"
 	"github.com/gin-gonic/gin"
@@ -49,6 +50,49 @@ func GetUserInfo(c *gin.Context) {
 		return
 	}
 	c.JSON(http.StatusOK, utils.GenResponse(20000, userInfo, nil))
+	return
+
+}
+
+func GetUserAbout(c *gin.Context) {
+	about, e := service.GetAbout()
+	if e != nil {
+		c.JSON(http.StatusInternalServerError, utils.GenResponse(40027, nil, e))
+	}
+	c.JSON(http.StatusOK, utils.GenResponse(20000, about, nil))
+
+}
+
+func EditUserAbout(c *gin.Context) {
+	bytes, err := c.GetRawData()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, utils.GenResponse(40028, nil, err))
+	}
+
+	u := service.User{}
+	if e := json.Unmarshal(bytes, &u); e != nil {
+		c.JSON(http.StatusInternalServerError, utils.GenResponse(20028, nil, err))
+		return
+	}
+
+	if u.About != "" {
+		if e := u.EditAbout(); e != nil {
+			c.JSON(http.StatusInternalServerError, utils.GenResponse(40028, nil, e))
+			return
+		}
+	} else if u.Password != "" {
+		if e := u.ResetPassword(); e != nil {
+			c.JSON(http.StatusInternalServerError, utils.GenResponse(40028, nil, e))
+			return
+		}
+	} else {
+		if e := u.EditUser(); e != nil {
+			c.JSON(http.StatusInternalServerError, utils.GenResponse(40028, nil, e))
+			return
+		}
+	}
+
+	c.JSON(http.StatusOK, utils.GenResponse(20000, nil, nil))
 	return
 
 }

@@ -18,9 +18,13 @@ func InitRouter() *gin.Engine {
 	apiv1 := r.Group(utils.AppInfo.ApiBaseUrl)
 
 	{
+		apiv1.Static(utils.AppInfo.StaticBasePath, utils.AppInfo.UploadBasePath)
 		apiv1.POST("/user/login", v1.Login)
 		apiv1.POST("/user/logout", v1.Logout)
 		apiv1.GET("/user/info", v1.GetUserInfo)
+		apiv1.GET("/user/about", v1.GetUserAbout)
+		apiv1.PATCH("/user/edit", v1.EditUserAbout)
+		apiv1.POST("/upload", v1.UploadImageAvatar)
 	}
 	return r
 }

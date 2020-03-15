@@ -51,3 +51,29 @@ func GetUser() (User, error) {
 	e := db.Get(&user, "select avatar,introduction,nickname from blog_user")
 	return user, e
 }
+
+func GetAbout() (string, error) {
+	var s string
+	e := db.Get(&s, "select about from blog_user where username='admin'")
+	return s, e
+}
+
+func (u User) EditAbout() error {
+	_, e := db.Exec("update blog_user set about=? where username='admin'", u.About)
+	return e
+}
+
+func (u User) ResetPassword() error {
+	_, e := db.Exec("update blog_user set password=? where username='admin'", utils.EncodeMD5(u.Password))
+	return e
+}
+
+func (u User) EditUser() error {
+	_, e := db.Exec("update blog_user set avatar=?,introduction=?,nickname=?", u.Avatar, u.Introduction, u.Nickname)
+	return e
+}
+
+func SetAvatarUrl(url string) error {
+	_, e := db.Exec("update blog_user set avatar=? where username='admin'", url)
+	return e
+}
