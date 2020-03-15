@@ -25,6 +25,18 @@ func InitRouter() *gin.Engine {
 		apiv1.GET("/user/about", v1.GetUserAbout)
 		apiv1.PATCH("/user/edit", v1.EditUserAbout)
 		apiv1.POST("/upload", v1.UploadImageAvatar)
+
+		// tags
+		apiv1.GET("/tags", v1.GetAllTags)
+		apiv1.POST("/tags", v1.CreateTag)
+		apiv1.PUT("/tags/:id", v1.EditTag)
+		apiv1.DELETE("/tags/:id", v1.DeleteTag)
+
+		// category
+		apiv1.GET("/categories", v1.GetAllCategory)
+		apiv1.POST("/categories", v1.CreateCategory)
+		apiv1.PUT("/categories/:id", v1.EditCategory)
+		apiv1.DELETE("/categories/:id", v1.DeleteCategory)
 	}
 	return r
 }
