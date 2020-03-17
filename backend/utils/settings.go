@@ -34,9 +34,18 @@ type Database struct {
 	DBName   string `json:"db_name"`
 }
 
+type Redis struct {
+	Host      string `json:"host"`
+	Post      string `json:"post"`
+	Password  string `json:"password"`
+	DB        int    `json:"db"`
+	CacheTime int    `json:"cache_time"`
+}
+
 var AppInfo = &App{}
 var ServerInfo = &Server{}
 var DBInfo = &Database{}
+var RedisInfo = &Redis{}
 
 func init() {
 	viper.AddConfigPath("conf")
@@ -68,4 +77,10 @@ func init() {
 	DBInfo.User = viper.GetString("database.user")
 	DBInfo.Password = viper.GetString("database.password")
 	DBInfo.DBName = viper.GetString("database.dbName")
+
+	RedisInfo.Host = viper.GetString("redis.host")
+	RedisInfo.Post = viper.GetString("redis.port")
+	RedisInfo.Password = viper.GetString("redis.password")
+	RedisInfo.DB = viper.GetInt("redis.db")
+	RedisInfo.CacheTime = viper.GetInt("redis.cacheTime")
 }

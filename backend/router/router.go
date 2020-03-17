@@ -37,6 +37,13 @@ func InitRouter() *gin.Engine {
 		apiv1.POST("/categories", v1.CreateCategory)
 		apiv1.PUT("/categories/:id", v1.EditCategory)
 		apiv1.DELETE("/categories/:id", v1.DeleteCategory)
+
+		// soups
+		apiv1.POST("/soups", v1.CreateSoup)
+		apiv1.DELETE("/soups/:id", v1.DeleteSoup)
+		apiv1.PUT("/soups/:id", v1.EditSoup)
+		apiv1.GET("/soups", v1.GetAllSoups)
+		apiv1.GET("/soup/random", v1.GetRandSoup)
 	}
 	return r
 }

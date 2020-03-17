@@ -18,6 +18,9 @@ github.com/go-playground/universal-translator
 github.com/go-sql-driver/mysql
 # github.com/golang/protobuf v1.3.2
 github.com/golang/protobuf/proto
+# github.com/gomodule/redigo v2.0.0+incompatible
+github.com/gomodule/redigo/internal
+github.com/gomodule/redigo/redis
 # github.com/hashicorp/hcl v1.0.0
 github.com/hashicorp/hcl
 github.com/hashicorp/hcl/hcl/ast
